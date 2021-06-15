@@ -3,13 +3,13 @@ module.exports = (server) => {
 
   const registerCharacterHandler = require('./character');
 
-  let characters = {};
+  const characterGroup = {};
 
   const connectionHandler = (socket) => {
-    registerCharacterHandler(io, socket, characters);
+    registerCharacterHandler(io, socket, characterGroup);
 
     socket.on('au:disconnection', () => {
-      delete characters[socket.id];
+      delete characterGroup[socket.id];
       io.emit('character:disconnection', socket.id);
     });
   };
