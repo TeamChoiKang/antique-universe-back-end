@@ -8,11 +8,11 @@ module.exports = (server) => {
   const connectionHandler = (socket) => {
     registerCharacterHandler(io, socket, characterGroup);
 
-    socket.on('au:disconnection', () => {
+    socket.on('disconnect', () => {
       delete characterGroup[socket.id];
       io.emit('character:disconnection', socket.id);
     });
   };
 
-  io.on('au:connection', connectionHandler);
+  io.on('connection', connectionHandler);
 };
