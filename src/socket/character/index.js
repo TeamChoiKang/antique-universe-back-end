@@ -6,15 +6,15 @@ module.exports = (io, socket, characters) => {
     socketId: socket.id,
   };
 
-  socket.emit('currentCharacter', characters);
+  socket.emit('character:currentCharacter', characters);
 
-  socket.broadcast.emit('newCharacter', characters[socket.id]);
+  socket.broadcast.emit('character:newCharacter', characters[socket.id]);
 
-  socket.on('characterMovement', (movementData) => {
+  socket.on('character:move', (movementData) => {
     characters[socket.id].xCoordinate = movementData.xCoordinate;
     characters[socket.id].yCoordinate = movementData.yCoordinate;
     characters[socket.id].animation = movementData.animation;
 
-    socket.broadcast.emit('characterMoved', characters[socket.id]);
+    socket.broadcast.emit('character:moved', characters[socket.id]);
   });
 };
