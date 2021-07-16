@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  CI:
     # The type of runner that the job will run on
     runs-on: ubuntu-18.04
 
@@ -30,11 +30,9 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            fuser -n tcp -k 3001
             cd ~/antique-universe-back-end
             git pull
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" 
             npm install
-            npm run start
