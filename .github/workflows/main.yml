@@ -30,6 +30,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
+            fuser -n tcp -k 3001
             cd ~/antique-universe-back-end
             git pull
             export NVM_DIR="$HOME/.nvm"
