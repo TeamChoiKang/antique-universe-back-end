@@ -8,6 +8,10 @@ module.exports = {
   plugins: ["prettier"],
   ignorePatterns: ["node_modules/"],
   rules: {
-    "prettier/prettier": "error",
+    "linebreak-style": [
+      "error",
+      require("os").EOL === "\r\n" ? "windows" : "unix",
+    ],
+    "prettier/prettier": ["error", { endOfLine: "auto" }],
   },
 };
