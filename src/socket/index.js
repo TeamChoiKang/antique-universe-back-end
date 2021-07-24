@@ -3,10 +3,16 @@ module.exports = (server) => {
 
   const registerCharacterHandler = require("./character");
 
-  const characterGroup = {};
+  const CharacterGroup = require("./../model/characterGroup");
+  const Character = require("./../model/character");
+
+  const characterGroup = new CharacterGroup();
 
   const connectionHandler = (socket) => {
-    registerCharacterHandler(io, socket, characterGroup);
+    const character = new Character(450, 350, socket.id);
+    characterGroup.appendCharacter(character);
+
+    registerCharacterHandler(socket, characterGroup, character);
 
     socket.on("disconnect", () => {
       delete characterGroup[socket.id];
