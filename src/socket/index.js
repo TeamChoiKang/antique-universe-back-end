@@ -1,18 +1,24 @@
 module.exports = (server) => {
-  const io = require('socket.io')(server, { cors: { origin: '*' } });
+  const io = require("socket.io")(server, { cors: { origin: "*" } });
 
-  const registerCharacterHandler = require('./character');
+  const registerCharacterHandler = require("./character");
 
-  const characterGroup = {};
+  const CharacterGroup = require("./../model/characterGroup");
+  const Character = require("./../model/character");
+
+  const characterGroup = new CharacterGroup();
 
   const connectionHandler = (socket) => {
-    registerCharacterHandler(io, socket, characterGroup);
+    const character = new Character(450, 350, socket.id);
+    characterGroup.appendCharacter(character);
 
-    socket.on('disconnect', () => {
+    registerCharacterHandler(socket, characterGroup, character);
+
+    socket.on("disconnect", () => {
       delete characterGroup[socket.id];
-      io.emit('character:disconnection', socket.id);
+      io.emit("character:disconnection", socket.id);
     });
   };
 
-  io.on('connection', connectionHandler);
+  io.on("connection", connectionHandler);
 };
