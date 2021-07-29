@@ -17,9 +17,13 @@
     "url": "https://github.com/TeamChoiKang/antique-universe-back-end/issues"
   },
   "homepage": "https://github.com/TeamChoiKang/antique-universe-back-end#readme",
+  "_moduleAliases": {
+    "@": "src"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "module-alias": "^2.2.2",
     "nodemon": "^2.0.7",
     "socket.io": "^4.0.1"
   },
