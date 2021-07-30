@@ -1,12 +1,12 @@
 const AuthService = require('@/services/auth');
 
-exports.signin = async (req, res) => {
+exports.signin = async (request, response) => {
   try {
-    const token = req.headers.authorization;
-    const id = await AuthService.validateToken(token);
-    res.json({ id });
+    const token = request.headers.authorization;
+    const { vendor } = request.query;
+    const id = await AuthService.validateToken(vendor, token);
+    response.json({ id });
   } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
+    response.status(500).json(err);
   }
 };

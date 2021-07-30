@@ -1,13 +1,18 @@
-const { KAKAO_OAUTH_URI } = require('@/constants');
-const fetch = require('node-fetch');
+const { KAKAO_VENDOR } = require('@/constants');
+const KakaoOAuthStrategy = require('./KakaoOAuthStrategy');
+const OAuthStrategy = require('./OAuthStrategy');
 
-exports.validateToken = async token => {
-  const response = await fetch(`${KAKAO_OAUTH_URI}/user/access_token_info`, {
-    method: 'GET',
-    headers: {
-      Authorization: token,
-    },
-  });
-  const { id } = await response.json();
+exports.validateToken = async (vendor, token) => {
+  const oAuthStrategy = getOauthStrategy(vendor);
+  const id = await oAuthStrategy.validateToken(token);
   return id;
+};
+
+const getOauthStrategy = vendor => {
+  switch (vendor) {
+    case KAKAO_VENDOR:
+      return new KakaoOAuthStrategy();
+    default:
+      return new OAuthStrategy();
+  }
 };
