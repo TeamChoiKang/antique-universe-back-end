@@ -1,5 +1,5 @@
 class OAuthStrategy {
-  validateToken() {
+  validateOAuthToken() {
     return new Error('no match oauth service');
   }
 }

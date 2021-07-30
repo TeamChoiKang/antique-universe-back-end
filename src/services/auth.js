@@ -2,9 +2,9 @@ const { KAKAO_VENDOR } = require('@/constants');
 const KakaoOAuthStrategy = require('./KakaoOAuthStrategy');
 const OAuthStrategy = require('./OAuthStrategy');
 
-exports.validateToken = async (vendor, token) => {
+exports.validateOAuthToken = async (vendor, oAuthToken) => {
   const oAuthStrategy = getOauthStrategy(vendor);
-  const id = await oAuthStrategy.validateToken(token);
+  const id = await oAuthStrategy.validateOAuthToken(oAuthToken);
   return id;
 };
 

@@ -1,10 +1,10 @@
-const { validationToken } = require('@/api/auth');
+const { validationOAuthToken } = require('@/api/auth');
 const { KAKAO_OAUTH_URI } = require('@/constants');
 const OAuthStrategy = require('./OAuthStrategy');
 
 class KakaoOAuthStrategy extends OAuthStrategy {
-  async validateToken(token) {
-    const id = await validationToken(KAKAO_OAUTH_URI, token);
+  async validateOAuthToken(token) {
+    const id = await validationOAuthToken(KAKAO_OAUTH_URI, token);
     return id;
   }
 }

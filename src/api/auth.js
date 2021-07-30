@@ -1,10 +1,10 @@
 const fetch = require('node-fetch');
 
-exports.validationToken = async (url, token) => {
+exports.validationOAuthToken = async (url, oAuthtoken) => {
   const response = await fetch(url, {
     method: 'GET',
     headers: {
-      Authorization: token,
+      Authorization: oAuthtoken,
     },
   });
   const { id } = await response.json();
