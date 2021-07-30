@@ -1,11 +1,16 @@
 {
+  "[javascript]": {
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
+      "source.fixAll.eslint": true
     },
-    "editor.formatOnSave": false,
-    "eslint.validate": [
-        "javascript",
-        "javascriptreact",
-        "json",
-    ],
+    "editor.formatOnSave": false
+  },
+  "[javascriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "editor.formatOnSave": false
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

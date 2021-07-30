@@ -6,7 +6,7 @@ class CharacterGroup {
   getCharacterGroupState() {
     const characterGroupState = {};
 
-    Object.keys(this.characterGroup).forEach((key) => {
+    Object.keys(this.characterGroup).forEach(key => {
       characterGroupState[key] = this.characterGroup[key].getCharacterState();
     });
 

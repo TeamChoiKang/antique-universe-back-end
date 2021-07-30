@@ -2,7 +2,7 @@ class Character {
   constructor(x = 0, y = 0, socketId) {
     this.x = x;
     this.y = y;
-    this.animation = "turn";
+    this.animation = 'turn';
     this.socketId = socketId;
     this.currentMap = undefined;
   }
