@@ -10,6 +10,7 @@ module.exports = {
     ecmaVersion: 8,
   },
   rules: {
+    'no-unused-vars': 1,
     'linebreak-style': ['error', require('os').EOL === '\r\n' ? 'windows' : 'unix'],
   },
 };
