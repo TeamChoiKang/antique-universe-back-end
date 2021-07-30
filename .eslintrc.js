@@ -4,14 +4,12 @@ module.exports = {
     es6: true,
     node: true,
   },
-  extends: ["eslint:recommended", "plugin:prettier/recommended"],
-  plugins: ["prettier"],
-  ignorePatterns: ["node_modules/"],
+  extends: ['eslint:recommended', 'plugin:prettier/recommended'],
+  ignorePatterns: ['node_modules/'],
+  parserOptions: {
+    ecmaVersion: 8,
+  },
   rules: {
-    "linebreak-style": [
-      "error",
-      require("os").EOL === "\r\n" ? "windows" : "unix",
-    ],
-    "prettier/prettier": ["error", { endOfLine: "auto" }],
+    'linebreak-style': ['error', require('os').EOL === '\r\n' ? 'windows' : 'unix'],
   },
 };
