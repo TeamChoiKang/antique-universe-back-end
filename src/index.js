@@ -1,15 +1,19 @@
 require('module-alias/register');
 require('dotenv').config();
 
-const app = require('express')();
+const express = require('express');
+const app = express();
 const cors = require('cors');
 
+app.use(express.json());
 app.use(cors());
 
 const server = require('http').createServer(app);
 
-const startSocket = require('./socket');
+const auth = require('@/routes/auth');
+app.use(auth);
 
+const startSocket = require('./socket');
 startSocket(server);
 
 server.listen(3001, () => {
