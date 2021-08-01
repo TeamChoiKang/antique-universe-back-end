@@ -1,4 +1,5 @@
 const AuthService = require('@/services/auth');
+const UserService = require('@/services/user');
 
 exports.signin = async (request, response) => {
   try {
@@ -7,8 +8,10 @@ exports.signin = async (request, response) => {
     if (!oAuthToken || !vendor) {
       throw new Error('no oAuthToken or vendor');
     }
-    const id = await AuthService.validateOAuthToken(vendor, oAuthToken);
-    response.json({ id });
+
+    const userId = await AuthService.validateOAuthToken(vendor, oAuthToken);
+    const user = await UserService.getUser(userId);
+    response.json(user);
   } catch (err) {
     console.log(err);
     response.status(500).json(err);
