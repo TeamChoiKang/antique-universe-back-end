@@ -1,17 +1,16 @@
+//setting
 require('./package/pathAlias');
-require('./package/env');
+require('@/package/env');
 
-const express = require('express');
-const app = express();
-const cors = require('cors');
+const webServer = require('@/package/webServer');
+const app = webServer();
 
-app.use(express.json());
-app.use(cors());
+//middleware
+require('@/middleware/json')(app);
+require('@/middleware/cors')(app);
+require('@/routes')(app);
 
 const server = require('http').createServer(app);
-
-const auth = require('@/routes/auth');
-app.use(auth);
 
 const startSocket = require('./socket');
 startSocket(server);
