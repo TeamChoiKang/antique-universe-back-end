@@ -1,6 +1,11 @@
+const { HTTP_STATUS_CODE_BAD_REQUEST } = require('@/constants');
+const HttpError = require('@/model/error/HttpError');
+
 class OAuthStrategy {
   validateOAuthToken() {
-    return new Error('no match oauth service');
+    const statusCode = HTTP_STATUS_CODE_BAD_REQUEST;
+    const statusText = 'no match oauth service';
+    return new HttpError(statusCode, statusText);
   }
 }
 
