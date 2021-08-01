@@ -1,5 +1,5 @@
-require('module-alias/register');
-require('dotenv').config();
+require('./package/pathAlias');
+require('./package/env');
 
 const express = require('express');
 const app = express();
