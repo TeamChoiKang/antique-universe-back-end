@@ -11,8 +11,8 @@ exports.signin = async (request, response) => {
     const userId = await AuthService.validateOAuthToken(vendor, oAuthToken);
     const user = await UserService.getUser(userId);
     response.json(user);
-  } catch (err) {
-    console.log(err);
-    response.status(err.statusCode).json(err);
+  } catch (error) {
+    console.log(error);
+    response.status(error.statusCode).json(error);
   }
 };
