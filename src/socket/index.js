@@ -15,7 +15,7 @@ module.exports = server => {
     registerCharacterHandler(socket, characterGroup, character);
 
     socket.on('disconnect', () => {
-      delete characterGroup[socket.id];
+      characterGroup.removeCharacterBySocketId(socket.id);
       io.emit('character:disconnection', socket.id);
     });
   };
