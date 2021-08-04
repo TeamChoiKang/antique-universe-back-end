@@ -10,7 +10,6 @@ module.exports = server => {
 
   const connectionHandler = socket => {
     const character = new Character(450, 350, socket.id);
-    characterGroup.appendCharacter(character);
 
     registerCharacterHandler(socket, characterGroup, character);
 
