@@ -10,7 +10,8 @@ exports.signin = async (request, response) => {
 
     const userId = await AuthService.validateOAuthToken(vendor, oAuthToken);
     const user = await UserService.getUser(userId);
-    response.json(user);
+    const token = AuthService.generateToken(user);
+    response.json({ token });
   } catch (error) {
     console.log(error);
     response.status(error.statusCode).json(error);

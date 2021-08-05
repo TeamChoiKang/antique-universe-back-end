@@ -6,6 +6,16 @@ class User {
     this.phone = phone;
     this.age = age;
   }
+
+  toObject() {
+    return {
+      userId: this.userId,
+      name: this.name,
+      nickname: this.nickname,
+      phone: this.phone,
+      age: this.age,
+    };
+  }
 }
 
 module.exports = User;

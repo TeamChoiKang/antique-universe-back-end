@@ -1,18 +1,24 @@
+const jwt = require('@/package/jwt');
 const { KAKAO_VENDOR } = require('@/constants');
-const KakaoOAuthStrategy = require('./KakaoOAuthStrategy');
-const OAuthStrategy = require('./OAuthStrategy');
+const KakaoOAuth = require('./KaKaoOAuth');
+const OAuth = require('./OAuth');
 
 exports.validateOAuthToken = async (vendor, oAuthToken) => {
-  const oAuthStrategy = getOauthStrategy(vendor);
-  const id = await oAuthStrategy.validateOAuthToken(oAuthToken);
-  return id;
+  const oAuth = oAuthFactory(vendor);
+  const userId = await oAuth.validateOAuthToken(oAuthToken);
+  return userId;
 };
 
-const getOauthStrategy = vendor => {
+exports.generateToken = user => {
+  const token = jwt.sign(user.toObject(), process.env.JWT_PRIVATE_KEY);
+  return token;
+};
+
+const oAuthFactory = vendor => {
   switch (vendor) {
     case KAKAO_VENDOR:
-      return new KakaoOAuthStrategy();
+      return new KakaoOAuth();
     default:
-      return new OAuthStrategy();
+      return new OAuth();
   }
 };
