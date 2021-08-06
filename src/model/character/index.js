@@ -7,7 +7,7 @@ class Character {
     this.currentMap = undefined;
   }
 
-  setCharacterState(newX, newY, newAnimation) {
+  setCharacterState(newX, newY, newAnimation = 'turn') {
     this.x = newX;
     this.y = newY;
     this.animation = newAnimation;
