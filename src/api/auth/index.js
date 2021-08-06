@@ -1,4 +1,3 @@
-const { validateHttpResponse } = require('@/utils/validation');
 const fetch = require('node-fetch');
 
 exports.validationOAuthToken = async (url, oAuthtoken) => {
@@ -8,7 +7,6 @@ exports.validationOAuthToken = async (url, oAuthtoken) => {
       Authorization: oAuthtoken,
     },
   });
-  validateHttpResponse(response);
 
   const { id } = await response.json();
   return id;

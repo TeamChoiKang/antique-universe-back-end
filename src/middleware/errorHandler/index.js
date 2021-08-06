@@ -1,9 +1,12 @@
-const { HTTP_STATUS_CODE_INTERNAL_SERVER_ERROR } = require('@/constants');
+const {
+  HTTP_STATUS_CODE_INTERNAL_SERVER_ERROR,
+  HTTP_INTERNAL_SERVER_ERROR_MESSAGE,
+} = require('@/constants');
 
-function errorHandler(error, request, response) {
+function errorHandler(error, request, response, next) {
   console.log(error);
   response.status(HTTP_STATUS_CODE_INTERNAL_SERVER_ERROR);
-  response.send({ error });
+  response.json({ message: HTTP_INTERNAL_SERVER_ERROR_MESSAGE });
 }
 
 module.exports = app => {
