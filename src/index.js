@@ -1,15 +1,19 @@
-require('module-alias/register');
-require('dotenv').config();
+//setting
+require('./package/pathAlias');
+require('@/package/env');
 
-const app = require('express')();
-const cors = require('cors');
+const webServer = require('@/package/webServer');
+const app = webServer();
 
-app.use(cors());
+//middleware
+require('@/middleware/json')(app);
+require('@/middleware/cors')(app);
+require('@/routes')(app);
+require('@/middleware/errorHandler');
 
 const server = require('http').createServer(app);
 
 const startSocket = require('./socket');
-
 startSocket(server);
 
 server.listen(3001, () => {

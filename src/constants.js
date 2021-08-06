@@ -1,0 +1,6 @@
+//http
+exports.HTTP_STATUS_CODE_BAD_REQUEST = 400;
+exports.HTTP_STATUS_CODE_UNAUTHORIZED = 401;
+exports.HTTP_UNAUTHORIZED_MESSAGE = '권한이 유효하지 않습니다.';
+exports.HTTP_STATUS_CODE_INTERNAL_SERVER_ERROR = 500;
+exports.HTTP_INTERNAL_SERVER_ERROR_MESSAGE = '내부 서버 에러입니다. 관리자에게 문의하세요.';
