@@ -1,5 +1,5 @@
 const { validationOAuthToken } = require('@/api/auth');
-const { KAKAO_OAUTH_URI } = require('@/constants');
+const { KAKAO_OAUTH_URI } = require('./constants');
 const OAuth = require('./OAuth');
 
 class KakaoOAuth extends OAuth {

@@ -1,5 +1,5 @@
 const jwt = require('@/package/jwt');
-const { KAKAO_VENDOR } = require('@/constants');
+const { KAKAO_VENDOR } = require('./constants');
 const KakaoOAuth = require('./KaKaoOAuth');
 const OAuth = require('./OAuth');
 
