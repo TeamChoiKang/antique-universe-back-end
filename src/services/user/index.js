@@ -1,5 +1,5 @@
 const UserQuery = require('@/queries/user');
-const db = require('@/package/db');
+const db = require('@/db');
 const User = require('@/model/user');
 
 exports.getUser = async userId => {
