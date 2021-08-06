@@ -1,13 +1,11 @@
-const fetch = require('node-fetch');
+const ApiClient = require('@/api');
 
-exports.validationOAuthToken = async (url, oAuthtoken) => {
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      Authorization: oAuthtoken,
-    },
-  });
+class AuthClient extends ApiClient {
+  async validationOAuthToken(url, oAuthtoken) {
+    const header = { Authorization: oAuthtoken };
+    const { id: userId } = await this.instance.get(url, header);
+    return userId;
+  }
+}
 
-  const { id } = await response.json();
-  return id;
-};
+module.exports = new AuthClient();
