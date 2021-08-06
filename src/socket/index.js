@@ -1,21 +1,27 @@
 module.exports = server => {
   const io = require('socket.io')(server, { cors: { origin: '*' } });
 
-  const registerCharacterHandler = require('./character');
-
-  const CharacterGroup = require('@/model/characterGroup');
+  const Map = require('@/model/map');
+  const MapGroup = require('@/model/mapGroup');
   const Character = require('@/model/character');
 
-  const characterGroup = new CharacterGroup();
+  const registerMapHandler = require('@/socket/map');
+  const registerCharacterHandler = require('@/socket/character');
+
+  const mapGroup = new MapGroup();
+  mapGroup.appendMap(new Map('village'));
+  mapGroup.appendMap(new Map('shop'));
 
   const connectionHandler = socket => {
-    const character = new Character(450, 350, socket.id);
+    const myCharacter = new Character(0, 0, socket.id);
 
-    registerCharacterHandler(socket, characterGroup, character);
+    registerMapHandler(socket, mapGroup, myCharacter);
+    registerCharacterHandler(socket, myCharacter);
 
     socket.on('disconnect', () => {
-      characterGroup.removeCharacterBySocketId(socket.id);
-      io.emit('character:disconnection', socket.id);
+      const map = myCharacter.getCurrentMap();
+      map.removeCharacter(myCharacter);
+      socket.to(map.getName()).emit('character:disconnection', socket.id);
     });
   };
 
