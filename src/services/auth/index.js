@@ -9,6 +9,11 @@ exports.validateOAuthToken = async (vendor, oAuthToken) => {
   return userId;
 };
 
+exports.validateToken = async token => {
+  const user = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
+  return user;
+};
+
 exports.generateToken = user => {
   const token = jwt.sign(user.toObject(), process.env.JWT_PRIVATE_KEY);
   return token;

@@ -16,3 +16,14 @@ exports.signin = async (request, response) => {
     response.status(HTTP_STATUS_CODE_UNAUTHORIZED).json({ message: HTTP_UNAUTHORIZED_MESSAGE });
   }
 };
+
+exports.validateToken = async (request, response) => {
+  try {
+    const token = request.headers.authorization.substring(7);
+    const user = await AuthService.validateToken(token);
+    response.json(user);
+  } catch (error) {
+    console.log(error);
+    response.status(HTTP_STATUS_CODE_UNAUTHORIZED).json({ message: HTTP_UNAUTHORIZED_MESSAGE });
+  }
+};
