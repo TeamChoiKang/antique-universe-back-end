@@ -3,7 +3,7 @@ module.exports = (socket, character) => {
     socket.emit('character:myCharacter', character.getCharacterState());
 
     socket
-      .to(character.getCurrentMap().getName())
+      .to(character.getCurrentScene().getName())
       .emit('character:newCharacter', character.getCharacterState());
   });
 
@@ -11,7 +11,7 @@ module.exports = (socket, character) => {
     character.setCharacterState(movementData.x, movementData.y, movementData.animation);
 
     socket
-      .to(character.getCurrentMap().getName())
+      .to(character.getCurrentScene().getName())
       .emit('character:moved', character.getCharacterState());
   });
 };

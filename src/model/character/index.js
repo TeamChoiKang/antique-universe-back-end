@@ -4,7 +4,7 @@ class Character {
     this.y = y;
     this.animation = 'turn';
     this.socketId = socketId;
-    this.currentMap = undefined;
+    this.currentScene = undefined;
   }
 
   setCharacterState(newX, newY, newAnimation = 'turn') {
@@ -28,14 +28,14 @@ class Character {
     return this.socketId;
   }
 
-  setCurrentMap(map) {
-    this.currentMap = map;
+  setCurrentScene(scene) {
+    this.currentScene = scene;
 
     return this;
   }
 
-  getCurrentMap() {
-    return this.currentMap;
+  getCurrentScene() {
+    return this.currentScene;
   }
 }
 

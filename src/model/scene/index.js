@@ -1,13 +1,13 @@
 const CharacterGroup = require('@/model/characterGroup');
 
-class Map {
-  constructor(mapName) {
-    this._mapName = mapName;
+class Scene {
+  constructor(sceneName) {
+    this._sceneName = sceneName;
     this._characterGroup = new CharacterGroup();
   }
 
   getName() {
-    return this._mapName;
+    return this._sceneName;
   }
 
   getCharacterGroupState() {
@@ -23,4 +23,4 @@ class Map {
   }
 }
 
-module.exports = Map;
+module.exports = Scene;
