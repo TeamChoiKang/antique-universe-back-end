@@ -7,7 +7,7 @@ module.exports = {
   extends: ['eslint:recommended', 'plugin:prettier/recommended'],
   ignorePatterns: ['node_modules/'],
   parserOptions: {
-    ecmaVersion: 8,
+    ecmaVersion: 11,
   },
   rules: {
     'no-unused-vars': 1,
