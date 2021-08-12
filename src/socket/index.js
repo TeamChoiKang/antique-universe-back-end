@@ -4,13 +4,14 @@ module.exports = server => {
   const Scene = require('@/model/scene');
   const SceneGroup = require('@/model/sceneGroup');
   const Character = require('@/model/character');
+  const sceneKeys = require('@/model/scene/sceneKeys');
 
   const registerSceneHandler = require('@/socket/scene');
   const registerCharacterHandler = require('@/socket/character');
 
   const sceneGroup = new SceneGroup();
-  sceneGroup.appendScene(new Scene('village'));
-  sceneGroup.appendScene(new Scene('shop'));
+  sceneGroup.appendScene(new Scene(sceneKeys.VILLAGE_SCENE_KEY));
+  sceneGroup.appendScene(new Scene(sceneKeys.SHOP_SCENE_KEY));
 
   const connectionHandler = socket => {
     const myCharacter = new Character(0, 0, socket.id);
