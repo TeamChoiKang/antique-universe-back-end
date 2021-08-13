@@ -4,8 +4,7 @@ const UserService = require('@/services/user');
 
 exports.signin = async (request, response) => {
   try {
-    const oAuthToken = request.headers.authorization;
-    const { vendor } = request.query;
+    const { vendor, oAuthToken } = request.body;
 
     const userId = await AuthService.validateOAuthToken(vendor, oAuthToken);
     const user = await UserService.getUser(userId);
