@@ -1,21 +1,28 @@
 module.exports = server => {
   const io = require('socket.io')(server, { cors: { origin: '*' } });
 
-  const registerCharacterHandler = require('./character');
-
-  const CharacterGroup = require('@/model/characterGroup');
+  const Scene = require('@/model/scene');
+  const SceneGroup = require('@/model/sceneGroup');
   const Character = require('@/model/character');
+  const sceneKeys = require('@/model/scene/sceneKeys');
 
-  const characterGroup = new CharacterGroup();
+  const registerSceneHandler = require('@/socket/scene');
+  const registerCharacterHandler = require('@/socket/character');
+
+  const sceneGroup = new SceneGroup();
+  sceneGroup.appendScene(new Scene(sceneKeys.VILLAGE_SCENE_KEY));
+  sceneGroup.appendScene(new Scene(sceneKeys.SHOP_SCENE_KEY));
 
   const connectionHandler = socket => {
-    const character = new Character(450, 350, socket.id);
+    const myCharacter = new Character(0, 0, socket.id);
 
-    registerCharacterHandler(socket, characterGroup, character);
+    registerSceneHandler(socket, sceneGroup, myCharacter);
+    registerCharacterHandler(socket, myCharacter);
 
     socket.on('disconnect', () => {
-      characterGroup.removeCharacterBySocketId(socket.id);
-      io.emit('character:disconnection', socket.id);
+      const scene = myCharacter.getCurrentScene();
+      scene.removeCharacter(myCharacter);
+      socket.to(scene.getName()).emit('character:disconnection', socket.id);
     });
   };
 
