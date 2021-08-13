@@ -16,6 +16,19 @@ exports.signin = async (request, response) => {
   }
 };
 
+exports.signup = async (request, response) => {
+  try {
+    const { vendor, oAuthToken, signupInfo } = request.body;
+
+    const userId = await AuthService.validateOAuthToken(vendor, oAuthToken);
+    const user = await UserService.registerUser({ userId, ...signupInfo });
+    const token = AuthService.generateToken(user);
+    response.json({ token });
+  } catch (error) {
+    return error;
+  }
+};
+
 exports.validateToken = async (request, response) => {
   try {
     const token = request.headers.authorization.substring(7);

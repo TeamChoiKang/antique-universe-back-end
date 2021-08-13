@@ -7,3 +7,13 @@ exports.getUser = async userId => {
   const user = new User(...row[0]);
   return user;
 };
+
+exports.registerUser = async user => {
+  try {
+    const { userId, name, nickname, phone, age } = user;
+    await db.query(UserQuery.insertUser, [userId, name, nickname, phone, age]);
+    return new User(userId, name, nickname, phone, age);
+  } catch (error) {
+    return error;
+  }
+};
