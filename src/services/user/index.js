@@ -9,11 +9,7 @@ exports.getUser = async userId => {
 };
 
 exports.registerUser = async user => {
-  try {
-    const { userId, name, nickname, phone, age } = user;
-    await db.query(UserQuery.insertUser, [userId, name, nickname, phone, age]);
-    return new User(userId, name, nickname, phone, age);
-  } catch (error) {
-    return error;
-  }
+  const { userId, name, nickname, phone, age } = user.toObject();
+  await db.query(UserQuery.insertUser, [userId, name, nickname, phone, age]);
+  return new User(userId, name, nickname, phone, age);
 };
