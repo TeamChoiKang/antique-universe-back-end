@@ -9,7 +9,7 @@ const app = webServer();
 require('@/middleware/json')(app);
 require('@/middleware/cors')(app);
 require('@/routes')(app);
-require('@/middleware/errorHandler');
+require('@/middleware/errorHandler')(app);
 
 const server = require('http').createServer(app);
 
