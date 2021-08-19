@@ -28,8 +28,8 @@ exports.signin = async (request, response) => {
 
 exports.signup = async (request, response) => {
   try {
-    const { vendor, oAuthToken, signupInfo } = request.body;
-    const { name, nickname, phone, age } = signupInfo;
+    const { vendor, oAuthToken, signUpInfo } = request.body;
+    const { name, nickname, phone, age } = signUpInfo;
 
     const userId = await AuthService.validateOAuthToken(vendor, oAuthToken);
     const user = await UserService.registerUser(new User(userId, name, nickname, phone, age));
