@@ -8,6 +8,7 @@ module.exports = server => {
 
   const registerSceneHandler = require('@/socket/scene');
   const registerCharacterHandler = require('@/socket/character');
+  const registerChatHandler = require('@/socket/chat');
 
   const sceneGroup = new SceneGroup();
   sceneGroup.appendScene(new Scene(sceneKeys.VILLAGE_SCENE_KEY));
@@ -18,6 +19,7 @@ module.exports = server => {
 
     registerSceneHandler(socket, sceneGroup, myCharacter);
     registerCharacterHandler(socket, myCharacter);
+    registerChatHandler(socket);
 
     socket.on('disconnect', () => {
       const scene = myCharacter.getCurrentScene();
