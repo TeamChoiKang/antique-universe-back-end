@@ -1,44 +1,45 @@
 class EventManager {
-  constructor(socket) {
+  constructor(socket, character) {
     this._socket = socket;
+    this._character = character;
   }
 
-  registerSceneEventListner(sceneGroup, character) {
+  registerSceneEventListner(sceneGroup) {
     this._socket.on('map:join', sceneName => {
       const newScene = sceneGroup.findSceneByName(sceneName);
-      const prevScene = character.getCurrentScene();
+      const prevScene = this._character.getCurrentScene();
 
-      character.setCharacterState(500, 500);
+      this._character.setCharacterState(500, 500);
 
       if (prevScene) {
-        prevScene.removeCharacter(character);
+        prevScene.removeCharacter(this._character);
         this._socket.to(prevScene.getName()).emit('character:disconnection', this._socket.id);
         this._socket.leave(prevScene.getName());
       }
 
       this._socket.emit('character:currentCharacter', newScene.getCharacterGroupState());
 
-      character.setCurrentScene(newScene);
-      newScene.appendCharacter(character);
+      this._character.setCurrentScene(newScene);
+      newScene.appendCharacter(this._character);
       this._socket.join(newScene.getName());
     });
   }
 
-  registerChracterEventListner(character) {
+  registerChracterEventListner() {
     this._socket.on('character:start', () => {
-      this._socket.emit('character:myCharacter', character.getCharacterState());
+      this._socket.emit('character:myCharacter', this._character.getCharacterState());
 
       this._socket
-        .to(character.getCurrentScene().getName())
-        .emit('character:newCharacter', character.getCharacterState());
+        .to(this._character.getCurrentScene().getName())
+        .emit('character:newCharacter', this._character.getCharacterState());
     });
 
     this._socket.on('character:move', movementData => {
-      character.setCharacterState(movementData.x, movementData.y, movementData.animation);
+      this._character.setCharacterState(movementData.x, movementData.y, movementData.animation);
 
       this._socket
-        .to(character.getCurrentScene().getName())
-        .emit('character:moved', character.getCharacterState());
+        .to(this._character.getCurrentScene().getName())
+        .emit('character:moved', this._character.getCharacterState());
     });
   }
 
@@ -48,10 +49,10 @@ class EventManager {
     });
   }
 
-  registerDisconnectEventListner(character) {
+  registerDisconnectEventListner() {
     this._socket.on('disconnect', () => {
-      const scene = character.getCurrentScene();
-      scene.removeCharacter(character);
+      const scene = this._character.getCurrentScene();
+      scene.removeCharacter(this._character);
       this._socket.to(scene.getName()).emit('character:disconnection', this._socket.id);
     });
   }
