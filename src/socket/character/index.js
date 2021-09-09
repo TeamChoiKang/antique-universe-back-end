@@ -1,4 +1,4 @@
-module.exports = (socket, character) => {
+module.exports = (io, socket, character) => {
   socket.on('character:start', () => {
     socket.emit('character:myCharacter', character.getCharacterState());
 

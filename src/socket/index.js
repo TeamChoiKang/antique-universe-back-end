@@ -14,7 +14,7 @@ module.exports = server => {
   sceneGroup.appendScene(SceneFactory.getVillageScene());
   sceneGroup.appendScene(SceneFactory.getShopScene());
 
-  const disconnectHandler = (socket, character) => {
+  const disconnectHandler = (io, socket, character) => {
     socket.on('disconnect', () => {
       const scene = character.getCurrentScene();
       scene.removeCharacter(character);
@@ -24,7 +24,7 @@ module.exports = server => {
 
   const connectionHandler = socket => {
     const myCharacter = CharacterFactory.getMyCharacter(socket);
-    const eventManager = new EventManager(socket, myCharacter);
+    const eventManager = new EventManager(io, socket, myCharacter);
 
     eventManager.registerEventHandler(sceneEventHandler, sceneGroup);
     eventManager.registerEventHandler(characterEventHandler);
