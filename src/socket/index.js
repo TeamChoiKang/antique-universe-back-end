@@ -1,29 +1,35 @@
 module.exports = server => {
   const io = require('socket.io')(server, { cors: { origin: '*' } });
 
-  const Scene = require('@/model/scene');
+  const CharacterFactory = require('@/model/characterFactory');
+  const EventManager = require('@/model/eventManager');
+  const SceneFactory = require('@/model/sceneFactory');
   const SceneGroup = require('@/model/sceneGroup');
-  const Character = require('@/model/character');
-  const sceneKeys = require('@/model/scene/sceneKeys');
 
-  const registerSceneHandler = require('@/socket/scene');
-  const registerCharacterHandler = require('@/socket/character');
+  const sceneEventHandler = require('@/socket/scene');
+  const characterEventHandler = require('@/socket/character');
+  const chatEventHandler = require('@/socket/chat');
 
   const sceneGroup = new SceneGroup();
-  sceneGroup.appendScene(new Scene(sceneKeys.VILLAGE_SCENE_KEY));
-  sceneGroup.appendScene(new Scene(sceneKeys.SHOP_SCENE_KEY));
+  sceneGroup.appendScene(SceneFactory.getVillageScene());
+  sceneGroup.appendScene(SceneFactory.getShopScene());
 
-  const connectionHandler = socket => {
-    const myCharacter = new Character(0, 0, socket.id);
-
-    registerSceneHandler(socket, sceneGroup, myCharacter);
-    registerCharacterHandler(socket, myCharacter);
-
+  const disconnectHandler = (io, socket, character) => {
     socket.on('disconnect', () => {
-      const scene = myCharacter.getCurrentScene();
-      scene.removeCharacter(myCharacter);
+      const scene = character.getCurrentScene();
+      scene.removeCharacter(character);
       socket.to(scene.getName()).emit('character:disconnection', socket.id);
     });
+  };
+
+  const connectionHandler = socket => {
+    const myCharacter = CharacterFactory.getMyCharacter(socket);
+    const eventManager = new EventManager(io, socket, myCharacter);
+
+    eventManager.registerEventHandler(sceneEventHandler, sceneGroup);
+    eventManager.registerEventHandler(characterEventHandler);
+    eventManager.registerEventHandler(chatEventHandler);
+    eventManager.registerEventHandler(disconnectHandler);
   };
 
   io.on('connection', connectionHandler);

@@ -1,4 +1,4 @@
-module.exports = (socket, sceneGroup, character) => {
+module.exports = (io, socket, character, sceneGroup) => {
   socket.on('map:join', sceneName => {
     const newScene = sceneGroup.findSceneByName(sceneName);
     const prevScene = character.getCurrentScene();
