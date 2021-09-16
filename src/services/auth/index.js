@@ -2,7 +2,7 @@ const { HTTP_STATUS_CODE_UNAUTHORIZED, HTTP_UNAUTHORIZED_MESSAGE } = require('@/
 const HttpError = require('@/model/error/HttpError');
 const jwt = require('@/package/jwt');
 const { KAKAO_VENDOR } = require('./constants');
-const KakaoOAuth = require('./KaKaoOAuth');
+const KakaoOAuth = require('./KakaoOAuth');
 const OAuth = require('./OAuth');
 
 exports.validateOAuthToken = async (vendor, oAuthToken) => {
