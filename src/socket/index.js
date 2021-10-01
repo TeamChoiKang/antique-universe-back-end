@@ -9,6 +9,7 @@ module.exports = server => {
   const sceneEventHandler = require('@/socket/scene');
   const characterEventHandler = require('@/socket/character');
   const chatEventHandler = require('@/socket/chat');
+  const webRtcEventHandler = require('@/socket/webRtc');
 
   const sceneGroup = new SceneGroup();
   sceneGroup.appendScene(SceneFactory.getVillageScene());
@@ -29,6 +30,7 @@ module.exports = server => {
     eventManager.registerEventHandler(sceneEventHandler, sceneGroup);
     eventManager.registerEventHandler(characterEventHandler);
     eventManager.registerEventHandler(chatEventHandler);
+    eventManager.registerEventHandler(webRtcEventHandler);
     eventManager.registerEventHandler(disconnectHandler);
   };
 

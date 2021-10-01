@@ -5,6 +5,7 @@ class Character {
     this.animation = 'turn';
     this.socketId = socketId;
     this.currentScene = undefined;
+    this._stream = undefined;
   }
 
   setCharacterState(newX, newY, newAnimation = 'turn') {
@@ -36,6 +37,14 @@ class Character {
 
   getCurrentScene() {
     return this.currentScene;
+  }
+
+  getStream() {
+    return this._stream;
+  }
+
+  setStream(newStream) {
+    this._stream = newStream;
   }
 }
 
