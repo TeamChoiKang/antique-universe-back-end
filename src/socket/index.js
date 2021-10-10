@@ -23,6 +23,7 @@ module.exports = server => {
   };
 
   const connectionHandler = socket => {
+    console.log('connect', socket.id);
     const myCharacter = CharacterFactory.getMyCharacter(socket);
     const eventManager = new EventManager(io, socket, myCharacter);
 
