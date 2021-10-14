@@ -57,6 +57,10 @@ class Character {
     this._receiverPeerConnection = newReceiverPeerConnection;
   }
 
+  closeReceiverPeerConnection() {
+    this._receiverPeerConnection.close();
+  }
+
   getSenderPeerConnection(socketId) {
     return this._senderPeerConnectionMap.get(socketId);
   }
@@ -65,11 +69,8 @@ class Character {
     this._senderPeerConnectionMap.set(socketId, newSenderPeerConnection);
   }
 
-  removeSenderPeerConnection(socketId) {
-    return this._senderPeerConnectionMap.delete(socketId);
-  }
-
-  removeAllSenderPeerConnection() {
+  closeAllSenderPeerConnection() {
+    this._senderPeerConnectionMap.forEach(senderConnection => senderConnection.close());
     return this._senderPeerConnectionMap.clear();
   }
 }

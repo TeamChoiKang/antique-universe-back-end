@@ -18,6 +18,8 @@ module.exports = server => {
   const disconnectHandler = (io, socket, character) => {
     socket.on('disconnect', () => {
       const scene = character.getCurrentScene();
+      character.closeReceiverPeerConnection();
+      character.closeAllSenderPeerConnection();
       scene.removeCharacter(character);
       socket.to(scene.getName()).emit('character:disconnection', socket.id);
     });
