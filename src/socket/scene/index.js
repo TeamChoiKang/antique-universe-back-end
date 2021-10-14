@@ -1,8 +1,8 @@
 module.exports = (io, socket, character, sceneGroup) => {
-  socket.on('map:hasShopOwner', sceneName => {
+  socket.on('map:getShopOwner', sceneName => {
     const shopScene = sceneGroup.findSceneByName(sceneName);
-    const response = { owner: shopScene.getOwner() };
-    socket.emit('map:hasShopOwner', response);
+    const response = { owner: shopScene.getOwner ? shopScene.getOwner() : undefined };
+    socket.emit('map:getShopOwner', response);
   });
 
   socket.on('map:registerShopOwner', ({ socketId, sceneKey }) => {
@@ -22,10 +22,7 @@ module.exports = (io, socket, character, sceneGroup) => {
       socket.leave(prevScene.getName());
     }
 
-    socket.emit('character:currentCharacter', {
-      currentCharacter: newScene.getCharacterGroupState(),
-      owner: newScene.getOwner ? newScene.getOwner() : undefined,
-    });
+    socket.emit('character:currentCharacter', newScene.getCharacterGroupState());
 
     character.setCurrentScene(newScene);
     newScene.appendCharacter(character);

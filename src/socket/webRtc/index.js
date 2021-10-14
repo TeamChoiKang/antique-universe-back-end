@@ -30,7 +30,6 @@ module.exports = (io, socket, character) => {
     await receiverPeerConnection.setRemoteDescription(offer);
     const answer = await receiverPeerConnection.createAnswer({
       offerToReceiveAudio: true,
-      offerToReceiveVideo: true,
     });
     await receiverPeerConnection.setLocalDescription(answer);
 
@@ -78,7 +77,6 @@ module.exports = (io, socket, character) => {
     await senderPeerConnection.setRemoteDescription(offer);
     const answer = await senderPeerConnection.createAnswer({
       offerToReceiveAudio: false,
-      offerToReceiveVideo: false,
     });
     await senderPeerConnection.setLocalDescription(answer);
 
