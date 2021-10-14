@@ -1,4 +1,5 @@
 const Scene = require('@/model/scene');
+const ShopScene = require('@/model/scene/ShopScene');
 const sceneKeys = require('@/model/scene/sceneKeys');
 
 class SceneFactory {
@@ -7,7 +8,7 @@ class SceneFactory {
   }
 
   static getShopScene() {
-    return new Scene(sceneKeys.SHOP_SCENE_KEY);
+    return new ShopScene(sceneKeys.SHOP_SCENE_KEY);
   }
 }
 
