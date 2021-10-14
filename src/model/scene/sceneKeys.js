@@ -1,4 +1,4 @@
 module.exports = {
-  VILLAGE_SCENE_KEY: 'village',
-  SHOP_SCENE_KEY: 'shop',
+  VILLAGE_SCENE_KEY: 'villageScene',
+  SHOP_SCENE_KEY: 'shopScene',
 };
