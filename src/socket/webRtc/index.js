@@ -13,18 +13,18 @@ const CONFIG = {
 module.exports = (io, socket, character) => {
   const wrtc = require('wrtc');
 
-  socket.on('webRtcAudio:senderOffer', async offer => {
+  socket.on('webRtc:senderOffer', async offer => {
     const receiverPeerConnection = new wrtc.RTCPeerConnection(CONFIG);
-
-    character.setReceiverPeerConnection(receiverPeerConnection);
+    const peerConnectionManager = character.getPeerConnectionManager();
+    peerConnectionManager.setReceiverPeerConnection(receiverPeerConnection);
 
     receiverPeerConnection.onicecandidate = ({ candidate }) => {
       if (!candidate) return;
-      socket.emit('webRtcAudio:senderIceCandidate', candidate);
+      socket.emit('webRtc:senderIceCandidate', candidate);
     };
 
     receiverPeerConnection.ontrack = ({ streams }) => {
-      character.setStream(streams[0]);
+      peerConnectionManager.setStream(streams[0]);
     };
 
     await receiverPeerConnection.setRemoteDescription(offer);
@@ -33,14 +33,14 @@ module.exports = (io, socket, character) => {
     });
     await receiverPeerConnection.setLocalDescription(answer);
 
-    socket.emit('webRtcAudio:senderAnswer', answer);
+    socket.emit('webRtc:senderAnswer', answer);
 
     socket
       .to(character.getCurrentScene().getName())
-      .emit('webRtcAudio:newSender', character.getSocketId());
+      .emit('webRtc:newSender', character.getSocketId());
 
     socket.emit(
-      'webRtcAudio:currentSender',
+      'webRtc:currentSender',
       character
         .getCurrentScene()
         .getCharacterGroupSocketIdList()
@@ -48,30 +48,32 @@ module.exports = (io, socket, character) => {
     );
   });
 
-  socket.on('webRtcAudio:senderIceCandidate', candidate => {
-    character.getReceiverPeerConnection().addIceCandidate(candidate);
+  socket.on('webRtc:senderIceCandidate', candidate => {
+    const peerConnectionManager = character.getPeerConnectionManager();
+    peerConnectionManager.getReceiverPeerConnection().addIceCandidate(candidate);
   });
 
-  socket.on('webRtcAudio:receiverOffer', async ({ offer, socketId }) => {
+  socket.on('webRtc:receiverOffer', async ({ offer, socketId }) => {
     const senderPeerConnection = new wrtc.RTCPeerConnection(CONFIG);
-
-    character.setSenderPeerConnection(socketId, senderPeerConnection);
+    const peerConnectionManager = character.getPeerConnectionManager();
+    peerConnectionManager.setSenderPeerConnection(socketId, senderPeerConnection);
 
     senderPeerConnection.onicecandidate = ({ candidate }) => {
       if (!candidate) return;
-      socket.emit('webRtcAudio:receiverIceCandidate', { candidate, socketId });
+      socket.emit('webRtc:receiverIceCandidate', { candidate, socketId });
     };
 
-    const targetCharacter = character
+    const targetCharacterPeerConnectionManager = character
       .getCurrentScene()
       .getCharacterGroup()
-      .findCharacterBySocketId(socketId);
+      .findCharacterBySocketId(socketId)
+      .getPeerConnectionManager();
 
-    targetCharacter
+    targetCharacterPeerConnectionManager
       .getStream()
       .getTracks()
       .forEach(track => {
-        senderPeerConnection.addTrack(track, targetCharacter.getStream());
+        senderPeerConnection.addTrack(track, targetCharacterPeerConnectionManager.getStream());
       });
 
     await senderPeerConnection.setRemoteDescription(offer);
@@ -80,10 +82,11 @@ module.exports = (io, socket, character) => {
     });
     await senderPeerConnection.setLocalDescription(answer);
 
-    socket.emit('webRtcAudio:receiverAnswer', { answer, socketId });
+    socket.emit('webRtc:receiverAnswer', { answer, socketId });
   });
 
-  socket.on('webRtcAudio:receiverIceCandidate', async ({ candidate, socketId }) => {
-    await character.getSenderPeerConnection(socketId).addIceCandidate(candidate);
+  socket.on('webRtc:receiverIceCandidate', ({ candidate, socketId }) => {
+    const peerConnectionManager = character.getPeerConnectionManager();
+    peerConnectionManager.getSenderPeerConnection(socketId).addIceCandidate(candidate);
   });
 };

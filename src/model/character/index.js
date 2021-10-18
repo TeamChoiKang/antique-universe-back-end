@@ -1,3 +1,5 @@
+const PeerConnectionManager = require('@/model/peerConnectionManager');
+
 class Character {
   constructor(x = 0, y = 0, socketId) {
     this.x = x;
@@ -5,9 +7,7 @@ class Character {
     this.animation = 'turn';
     this.socketId = socketId;
     this.currentScene = undefined;
-    this._stream = undefined;
-    this._receiverPeerConnection = undefined;
-    this._senderPeerConnectionMap = new Map();
+    this._peerConnectionManager = new PeerConnectionManager();
   }
 
   setCharacterState(newX, newY, newAnimation = 'turn') {
@@ -41,37 +41,8 @@ class Character {
     return this.currentScene;
   }
 
-  getStream() {
-    return this._stream;
-  }
-
-  setStream(newStream) {
-    this._stream = newStream;
-  }
-
-  getReceiverPeerConnection() {
-    return this._receiverPeerConnection;
-  }
-
-  setReceiverPeerConnection(newReceiverPeerConnection) {
-    this._receiverPeerConnection = newReceiverPeerConnection;
-  }
-
-  closeReceiverPeerConnection() {
-    this._receiverPeerConnection.close();
-  }
-
-  getSenderPeerConnection(socketId) {
-    return this._senderPeerConnectionMap.get(socketId);
-  }
-
-  setSenderPeerConnection(socketId, newSenderPeerConnection) {
-    this._senderPeerConnectionMap.set(socketId, newSenderPeerConnection);
-  }
-
-  closeAllSenderPeerConnection() {
-    this._senderPeerConnectionMap.forEach(senderConnection => senderConnection.close());
-    return this._senderPeerConnectionMap.clear();
+  getPeerConnectionManager() {
+    return this._peerConnectionManager;
   }
 }
 
