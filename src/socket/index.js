@@ -10,6 +10,7 @@ module.exports = server => {
   const characterEventHandler = require('@/socket/character');
   const chatEventHandler = require('@/socket/chat');
   const webRtcEventHandler = require('@/socket/webRtc');
+  const webRtcVideoEventHandler = require('@/socket/webRtcVideo');
 
   const sceneGroup = new SceneGroup();
   sceneGroup.appendScene(SceneFactory.getVillageScene());
@@ -22,6 +23,16 @@ module.exports = server => {
       peerConnectionManager.closeReceiverPeerConnection();
       peerConnectionManager.closeAllSenderPeerConnection();
       scene.removeCharacter(character);
+
+      if (scene.getOwner) {
+        const shopPeerConnectionManager = scene.getPeerConnectionManager();
+        if (scene.getOwner() === socket.id) {
+          shopPeerConnectionManager.removeReceiverPeerConnection();
+        } else {
+          shopPeerConnectionManager.removeSenderPeerConnection(socket.id);
+        }
+      }
+
       socket.to(scene.getName()).emit('character:disconnection', socket.id);
     });
   };
@@ -34,6 +45,7 @@ module.exports = server => {
     eventManager.registerEventHandler(characterEventHandler);
     eventManager.registerEventHandler(chatEventHandler);
     eventManager.registerEventHandler(webRtcEventHandler);
+    eventManager.registerEventHandler(webRtcVideoEventHandler);
     eventManager.registerEventHandler(disconnectHandler);
   };
 
