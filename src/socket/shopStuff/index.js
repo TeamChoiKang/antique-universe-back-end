@@ -28,6 +28,6 @@ module.exports = (io, socket, character) => {
 
   socket.on('shopStuff:removeStuff', stuffId => {
     const stuffManager = character.getCurrentScene().getStuffManager();
-    socket.emit('shopStuff:removeStuff', stuffManager.removeStuff(Number(stuffId)));
+    socket.emit('shopStuff:removeStuff', stuffManager.removeStuff(stuffId));
   });
 };

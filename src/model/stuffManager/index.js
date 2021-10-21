@@ -17,7 +17,7 @@ class StuffManager {
     onlyAdult = false,
   ) {
     const newStuff = new Stuff(
-      this._stuffId,
+      this._stuffId + '',
       name,
       price,
       description,
