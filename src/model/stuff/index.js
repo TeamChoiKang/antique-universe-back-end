@@ -1,11 +1,16 @@
 class Stuff {
-  constructor(name, price, description, imageUrl, soldState, onlyAdult) {
+  constructor(stuffId, name, price, description, imageUrl, soldState, onlyAdult) {
+    this._stuffId = stuffId;
     this._name = name;
     this._price = price;
     this._description = description;
     this._imageUrl = imageUrl;
     this._soldState = soldState;
     this._onlyAdult = onlyAdult;
+  }
+
+  getStuffId() {
+    return this._stuffId;
   }
 
   getName() {
