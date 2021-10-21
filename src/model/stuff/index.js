@@ -60,6 +60,18 @@ class Stuff {
   setOnlyAdult(newOnlyAdult) {
     this._onlyAdult = newOnlyAdult;
   }
+
+  getStuffInfoObj() {
+    return {
+      stuffId: this._stuffId,
+      name: this._name,
+      price: this._price,
+      description: this._description,
+      imageUrl: this._imageUrl,
+      soldState: this._soldState,
+      onlyAdult: this._onlyAdult,
+    };
+  }
 }
 
 module.exports = Stuff;

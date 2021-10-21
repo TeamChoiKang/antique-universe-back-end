@@ -1,11 +1,13 @@
 const Scene = require('@/model/scene');
 const PeerConnectionManager = require('@/model/peerConnectionManager');
+const StuffManager = require('@/model/stuffManager');
 
 class ShopScene extends Scene {
   constructor(shopSceneName) {
     super(shopSceneName);
     this._ownerSocketId = '';
     this._peerConnectionManager = new PeerConnectionManager();
+    this._stuffManager = new StuffManager();
   }
 
   hasOwner() {
@@ -28,6 +30,10 @@ class ShopScene extends Scene {
 
   getPeerConnectionManager() {
     return this._peerConnectionManager;
+  }
+
+  getStuffManager() {
+    return this._stuffManager;
   }
 }
 
