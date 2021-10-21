@@ -17,11 +17,11 @@ module.exports = (io, socket, character) => {
 
   socket.on(
     'shopStuff:updateStuff',
-    ({ name, price, description, imageUrl, soldState, onlyAdult }) => {
+    ({ stuffId, name, price, description, imageUrl, soldState, onlyAdult }) => {
       const stuffManager = character.getCurrentScene().getStuffManager();
       socket.emit(
         'shopStuff:updateStuff',
-        stuffManager.updateStuff(name, price, description, imageUrl, soldState, onlyAdult),
+        stuffManager.updateStuff(stuffId, name, price, description, imageUrl, soldState, onlyAdult),
       );
     },
   );
