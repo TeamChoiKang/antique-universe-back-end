@@ -1,12 +1,15 @@
 module.exports = (io, socket, character, sceneGroup) => {
   socket.on('map:getShopOwner', sceneName => {
     const shopScene = sceneGroup.findSceneByName(sceneName);
-    const response = { owner: shopScene.getOwner ? shopScene.getOwner() : undefined };
+    const response = {
+      owner: shopScene.getOwner ? shopScene.getOwner() : undefined,
+      shopName: shopScene.getName(),
+    };
     socket.emit('map:getShopOwner', response);
   });
 
-  socket.on('map:registerShopOwner', ({ socketId, sceneKey }) => {
-    const shopScene = sceneGroup.findSceneByName(sceneKey);
+  socket.on('map:registerShopOwner', ({ socketId, shopName }) => {
+    const shopScene = sceneGroup.findSceneByName(shopName);
     shopScene.setOwner(socketId);
   });
 

@@ -7,8 +7,8 @@ class SceneFactory {
     return new Scene(sceneKeys.VILLAGE_SCENE_KEY);
   }
 
-  static getShopScene() {
-    return new ShopScene(sceneKeys.SHOP_SCENE_KEY);
+  static getShopScene(shopName) {
+    return new ShopScene(shopName);
   }
 }
 

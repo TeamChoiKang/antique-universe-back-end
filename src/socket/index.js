@@ -15,7 +15,8 @@ module.exports = server => {
 
   const sceneGroup = new SceneGroup();
   sceneGroup.appendScene(SceneFactory.getVillageScene());
-  sceneGroup.appendScene(SceneFactory.getShopScene());
+  sceneGroup.appendScene(SceneFactory.getShopScene('shop1'));
+  sceneGroup.appendScene(SceneFactory.getShopScene('shop2'));
 
   const disconnectHandler = (io, socket, character) => {
     socket.on('disconnect', () => {
