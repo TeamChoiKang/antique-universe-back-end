@@ -17,6 +17,19 @@ module.exports = server => {
   sceneGroup.appendScene(SceneFactory.getVillageScene());
   sceneGroup.appendScene(SceneFactory.getShopScene('shop1'));
   sceneGroup.appendScene(SceneFactory.getShopScene('shop2'));
+  sceneGroup.appendScene(SceneFactory.getShopScene('shop2'));
+  sceneGroup.appendScene(SceneFactory.getShopScene('shop3'));
+  sceneGroup.appendScene(SceneFactory.getShopScene('shop4'));
+  sceneGroup.appendScene(SceneFactory.getShopScene('shop5'));
+  sceneGroup.appendScene(SceneFactory.getShopScene('shop6'));
+  sceneGroup.appendScene(SceneFactory.getShopScene('shop7'));
+  sceneGroup.appendScene(SceneFactory.getShopScene('shop8'));
+  sceneGroup.appendScene(SceneFactory.getShopScene('shop9'));
+  sceneGroup.appendScene(SceneFactory.getShopScene('shop10'));
+  sceneGroup.appendScene(SceneFactory.getShopScene('shop11'));
+  sceneGroup.appendScene(SceneFactory.getShopScene('shop12'));
+  sceneGroup.appendScene(SceneFactory.getShopScene('shop13'));
+  sceneGroup.appendScene(SceneFactory.getShopScene('shop14'));
 
   const disconnectHandler = (io, socket, character) => {
     socket.on('disconnect', () => {
