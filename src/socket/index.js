@@ -12,6 +12,7 @@ module.exports = server => {
   const webRtcEventHandler = require('@/socket/webRtc');
   const webRtcVideoEventHandler = require('@/socket/webRtcVideo');
   const shopStuffEventHandler = require('@/socket/shopStuff');
+  const shopInfoEventHandler = require('@/socket/shopInfo');
 
   const sceneGroup = new SceneGroup();
   sceneGroup.appendScene(SceneFactory.getVillageScene());
@@ -62,6 +63,7 @@ module.exports = server => {
     eventManager.registerEventHandler(webRtcEventHandler);
     eventManager.registerEventHandler(webRtcVideoEventHandler);
     eventManager.registerEventHandler(shopStuffEventHandler);
+    eventManager.registerEventHandler(shopInfoEventHandler);
     eventManager.registerEventHandler(disconnectHandler);
   };
 

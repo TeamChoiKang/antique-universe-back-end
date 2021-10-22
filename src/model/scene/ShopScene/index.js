@@ -6,6 +6,7 @@ class ShopScene extends Scene {
   constructor(shopSceneName) {
     super(shopSceneName);
     this._ownerSocketId = '';
+    this._description = '';
     this._peerConnectionManager = new PeerConnectionManager();
     this._stuffManager = new StuffManager();
   }
@@ -22,6 +23,14 @@ class ShopScene extends Scene {
   setOwner(newOwnerSocketId) {
     this._ownerSocketId = newOwnerSocketId;
     return this._ownerSocketId;
+  }
+
+  getDescription() {
+    return this._description;
+  }
+
+  setDescription(newDescription) {
+    this._description = newDescription;
   }
 
   removeOwner() {
