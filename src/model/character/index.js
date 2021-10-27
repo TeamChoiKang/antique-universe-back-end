@@ -1,3 +1,5 @@
+const PeerConnectionManager = require('@/model/peerConnectionManager');
+
 class Character {
   constructor(x = 0, y = 0, socketId) {
     this.x = x;
@@ -5,6 +7,7 @@ class Character {
     this.animation = 'turn';
     this.socketId = socketId;
     this.currentScene = undefined;
+    this._peerConnectionManager = new PeerConnectionManager();
   }
 
   setCharacterState(newX, newY, newAnimation = 'turn') {
@@ -36,6 +39,10 @@ class Character {
 
   getCurrentScene() {
     return this.currentScene;
+  }
+
+  getPeerConnectionManager() {
+    return this._peerConnectionManager;
   }
 }
 

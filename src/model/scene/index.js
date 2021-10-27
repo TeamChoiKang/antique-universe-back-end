@@ -10,8 +10,16 @@ class Scene {
     return this._sceneName;
   }
 
+  getCharacterGroup() {
+    return this._characterGroup;
+  }
+
   getCharacterGroupState() {
     return this._characterGroup.getCharacterGroupState();
+  }
+
+  getCharacterGroupSocketIdList() {
+    return this._characterGroup.getCharacterGroupSocketIdList();
   }
 
   appendCharacter(newCharacter) {

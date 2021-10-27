@@ -13,6 +13,16 @@ class CharacterGroup {
     return characterGroupState;
   }
 
+  getCharacterGroupSocketIdList() {
+    const socketIdList = [];
+
+    Object.keys(this.characterGroup).forEach(key => {
+      socketIdList.push(this.characterGroup[key].getSocketId());
+    });
+
+    return socketIdList;
+  }
+
   appendCharacter(newCharacter) {
     this.characterGroup[newCharacter.getSocketId()] = newCharacter;
 
